@@ -7,6 +7,8 @@ ARG home=/home/sshuser
 RUN yum -y update && \
     yum -y install openssh-server \
     openssh-clients && \
+    chgrp -R 0 /etc/ssh/ && \
+    chmod -R g=u /etc/ssh/ && \
     /usr/bin/ssh-keygen -A && \
     groupadd sshgroup && \
     useradd -ms /bin/bash -g sshgroup sshuser && \
@@ -14,8 +16,6 @@ RUN yum -y update && \
     mkdir $home/.ssh && \
     touch $home/.ssh/authorized_keys && \
     chown sshuser:sshgroup $home/.ssh/authorized_keys && \
-    chmod 600 $home/.ssh/authorized_keys &&\
-    chgrp -R 0 /etc/ssh/sshd_config && \
-    chmod -R g=u /etc/ssh/sshd_config
+    chmod 600 $home/.ssh/authorized_keys
 EXPOSE 22
 CMD /usr/sbin/sshd && sleep infinity
