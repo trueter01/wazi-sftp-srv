@@ -7,8 +7,8 @@ ARG home=/home/sshuser
 RUN yum -y update && \
     yum -y install openssh-server \
     openssh-clients && \
-    chgrp -R 0 /etc/ssh/ && \
-    chmod -R g=u /etc/ssh/ && \
+#    chgrp -R 0 /etc/ssh/ && \
+#    chmod -R g=u /etc/ssh/ && \
     /usr/bin/ssh-keygen -A && \
     groupadd sshgroup && \
     useradd -ms /bin/bash -g sshgroup sshuser && \
